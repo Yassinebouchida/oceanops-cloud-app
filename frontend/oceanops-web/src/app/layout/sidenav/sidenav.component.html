@@ -1,0 +1,33 @@
+<div class="sidebar">
+
+  <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+    <i class="material-icons">dashboard</i>
+    <span>Dashboard</span>
+  </a>
+
+  <a class="nav-item" routerLink="/orders" routerLinkActive="active">
+    <i class="material-icons">shopping_cart</i>
+    <span>Orders</span>
+  </a>
+
+  <a class="nav-item" routerLink="/ship-requests" routerLinkActive="active">
+    <i class="material-icons">directions_boat</i>
+    <span>Ship Requests</span>
+  </a>
+
+  <a *ngIf="isAdmin" class="nav-item" routerLink="/inventory" routerLinkActive="active">
+    <i class="material-icons">inventory_2</i>
+    <span>Inventory</span>
+  </a>
+
+  <a *ngIf="isAdmin" class="nav-item" routerLink="/analytics" routerLinkActive="active">
+    <i class="material-icons">bar_chart</i>
+    <span>Analytics</span>
+  </a>
+
+  <a class="nav-item" routerLink="/settings" routerLinkActive="active">
+    <i class="material-icons">settings</i>
+    <span>Settings</span>
+  </a>
+
+</div>

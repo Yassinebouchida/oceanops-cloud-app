@@ -1,0 +1,210 @@
+<div class="details-container" *ngIf="request">
+
+  <div class="header">
+
+    <button class="back-btn" routerLink="/ship-requests">
+      ← Back
+    </button>
+
+    <div>
+      <h1>Ship Request #{{ request.id }}</h1>
+
+      <p class="subtitle">
+        {{ request.shipName }}
+      </p>
+    </div>
+
+  </div>
+
+  <!-- GENERAL INFO -->
+
+  <div class="card">
+
+    <h3>General Information</h3>
+
+    <div class="info-grid">
+
+      <div>
+        <span class="label">🚢 Ship</span>
+        <span>{{ request.shipName }}</span>
+      </div>
+
+      <div>
+        <span class="label">📍 Port</span>
+        <span>{{ request.port }}</span>
+      </div>
+
+      <div>
+        <span class="label">👤 Client</span>
+        <span>{{ request.clientName }}</span>
+      </div>
+
+      <div>
+        <span class="label">Status</span>
+
+        <span class="badge status" [ngClass]="request.status?.toLowerCase()">
+          {{ request.status }}
+        </span>
+      </div>
+
+      <div>
+        <span class="label">⚠ Urgency</span>
+
+        <span class="badge urgency" [ngClass]="request.urgencyLevel?.toLowerCase()">
+          {{ request.urgencyLevel }}
+        </span>
+      </div>
+
+      <div>
+        <span class="label">🕒 ETA</span>
+        <span>{{ request.eta || '—' }}</span>
+      </div>
+
+      <div>
+        <span class="label">📅 Delivery Date</span>
+        <span>{{ request.requestedDeliveryDate || '—' }}</span>
+      </div>
+
+      <div>
+        <span class="label">🗓 Created At</span>
+        <span>{{ request.createdAt | date:'medium' }}</span>
+      </div>
+
+    </div>
+
+    <div class="notes">
+      <strong>Notes</strong>
+      <p>{{ request.notes || 'No notes provided.' }}</p>
+    </div>
+
+  </div>
+
+  <!-- ITEMS -->
+
+  <div class="card">
+
+    <h3>Requested Items</h3>
+
+    <table class="items-table">
+
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let i of request.items">
+          <td>{{ i.itemName }}</td>
+          <td>{{ i.quantity }}</td>
+          <td>{{ i.unit }}</td>
+          <td>{{ i.remarks }}</td>
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- ATTACHMENTS -->
+
+  <div class="card">
+
+    <h3>Attachments</h3>
+
+    <div class="attachment" *ngFor="let file of request.attachments">
+
+      <div>
+        📄 {{ file.fileName }}
+      </div>
+
+      <button class="download-btn" (click)="download(file)">
+        Download
+      </button>
+
+    </div>
+
+    <p *ngIf="!request.attachments?.length">
+      No attachments uploaded.
+    </p>
+
+  </div>
+
+  <!-- ADMIN ACTIONS -->
+
+  <div class="card" *ngIf="userRole === 'ADMIN' && request.status === 'CREATED'">
+    <h3>Actions</h3>
+
+    <div class="actions">
+
+      <button class="approve-btn" (click)="updateStatus('APPROVED')">
+        Approve
+      </button>
+
+      <button class="reject-btn" (click)="updateStatus('REJECTED')">
+        Reject
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- AI -->
+  <div class="card" *ngIf="userRole === 'ADMIN' || userRole === 'AGENT'">
+
+    <div class="ai-header">
+      <h3>AI Analysis</h3>
+
+      <button (click)="runAi()" class="ai-button">
+        Run Analysis
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading">
+      ⏳ Running AI Analysis...
+    </div>
+
+    <div *ngIf="error" class="error">
+      {{ error }}
+    </div>
+
+    <div *ngIf="ai">
+
+      <h4>AI Decision</h4>
+      <p><strong>{{ ai.decision }}</strong></p>
+
+      <h4>Confidence</h4>
+      <p>{{ ai.confidence }}%</p>
+
+      <h4>Summary</h4>
+      <p>{{ ai.summary }}</p>
+
+      <h4>Urgency Rating</h4>
+      <p>{{ ai.urgency_rating }}</p>
+
+      <h4>Risks</h4>
+      <ul>
+        <li *ngFor="let r of ai.risks">{{ r }}</li>
+      </ul>
+
+      <h4>Missing Information</h4>
+      <ul>
+        <li *ngFor="let m of ai.missing_information">{{ m }}</li>
+      </ul>
+
+      <h4>Recommended Items</h4>
+      <ul>
+        <li *ngFor="let item of ai.recommended_items">{{ item }}</li>
+      </ul>
+
+      <h4>Notes</h4>
+      <p>{{ ai.notes }}</p>
+
+    </div>
+
+  </div>
+
+</div>

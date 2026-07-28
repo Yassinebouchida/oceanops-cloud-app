@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>OceanopsWeb</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<script>
+  if (location.hostname === "localhost") {
+    // Block ALL possible injected functions
+    const block = [
+      "addFUserInfo",
+      "getUserFbFullName",
+      "getUserFbInfo",
+      "getUserFullName",
+      "getAttribute"
+    ];
+
+    // Define them early (override)
+    block.forEach(fn => window[fn] = () => {});
+
+    // Kill any script that gets injected later
+    const observer = new MutationObserver(() => {
+      block.forEach(fn => {
+        if (typeof window[fn] === "function" && window[fn].toString().indexOf('{}') === -1) {
+          window[fn] = () => {};
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true
+    });
+  }
+</script>
+
+</head>
+<body class="mat-typography">
+  <app-root></app-root>
+</body>
+</html>

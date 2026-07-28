@@ -1,0 +1,135 @@
+<div class="page-container">
+
+  <h2>Create Ship Request</h2>
+
+  <div class="form-card">
+    <form (ngSubmit)="submit()">
+
+      <!-- GENERAL INFO -->
+      <div class="form-row">
+        <div class="form-field">
+          <label>Port</label>
+          <input [(ngModel)]="form.port" name="port" required placeholder="CASABLANCA" (change)="loadAgents()">
+        </div>
+
+        <div class="form-field">
+          <label>Ship Name</label>
+          <input [(ngModel)]="form.shipName" name="shipName" required placeholder="Evergreen Harmony">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>IMO Number</label>
+          <input type="text" [(ngModel)]="form.shipId" name="shipId" required placeholder="IMO 9232414" maxlength="11">
+
+        </div>
+
+
+
+        <div class="form-field">
+          <label>Port Agent</label>
+
+          <select [(ngModel)]="form.agentId" name="agentId" required>
+
+            <option value="" disabled>
+              Select a port agent
+            </option>
+
+            <option *ngFor="let a of agents" [value]="a.id">
+              {{ a.companyName }} — {{ a.port }}
+            </option>
+
+          </select>
+        </div>
+      </div>
+
+
+
+
+      <!-- URGENCY + DATES -->
+      <div class="form-row">
+        <div class="form-field">
+          <label>Urgency Level</label>
+          <select [(ngModel)]="form.urgencyLevel" name="urgencyLevel">
+            <option value="NORMAL">Normal</option>
+            <option value="URGENT">Urgent</option>
+            <option value="CRITICAL">Critical</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label>ETA</label>
+          <input type="date" [(ngModel)]="form.eta" name="eta">
+        </div>
+
+        <div class="form-field">
+          <label>Requested Delivery Date</label>
+          <input type="date" [(ngModel)]="form.requestedDeliveryDate" name="requestedDeliveryDate">
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="form-row">
+        <div class="form-field" style="flex: 1;">
+          <label>Notes</label>
+          <textarea [(ngModel)]="form.notes" name="notes" rows="3" placeholder="Special requirements..."></textarea>
+        </div>
+      </div>
+
+      <hr style="margin: 30px 0;">
+
+      <h3>Request Items</h3>
+
+      <!-- ITEMS LIST -->
+      <div *ngFor="let item of form.items; let i = index">
+
+        <div class="form-row">
+          <div class="form-field">
+            <label>Item Name</label>
+            <input [(ngModel)]="item.itemName" [name]="'itemName' + i" required placeholder="Fresh Vegetables">
+          </div>
+
+          <div class="form-field">
+            <label>Quantity</label>
+            <input type="number" [(ngModel)]="item.quantity" [name]="'quantity' + i" required placeholder="10">
+          </div>
+
+          <div class="form-field">
+            <label>Unit</label>
+            <input [(ngModel)]="item.unit" [name]="'unit' + i" placeholder="kg, pcs, L...">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field" style="flex: 1;">
+            <label>Remarks</label>
+            <input [(ngModel)]="item.remarks" [name]="'remarks' + i" placeholder="Organic / brand required">
+          </div>
+
+          <button type="button" class="btn-remove" (click)="removeItem(i)" *ngIf="form.items.length > 1">
+            Remove
+          </button>
+        </div>
+
+        <hr>
+      </div>
+
+      <button type="button" class="btn-add" (click)="addItem()">+ Add Item</button>
+
+      <!-- ATTACHMENTS -->
+      <hr style="margin: 30px 0;">
+
+      <div class="form-row">
+        <div class="form-field">
+          <label>Attachments</label>
+          <input type="file" multiple (change)="onFilesSelected($event)">
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Create Request</button>
+
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,124 @@
+<div class="page-container">
+  <h2>Orders</h2>
+
+  <ng-container *ngIf="orders.length > 0; else noOrders">
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ship</th>
+          <th>Port</th>
+          <th>Client</th>
+          <th>Agent</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let o of orders">
+          <td>
+            <a [routerLink]="['/orders', o.id]">#{{ o.id }}</a>
+          </td>
+          <td>{{ o.shipName }}</td>
+          <td>{{ o.port }}</td>
+          <td>{{ o.clientName }}</td>
+          <td>{{ o.agentName }}</td>
+          <td>{{ o.description }}</td>
+
+          <td>
+            <span class="status-badge" [style.background]="getStatusColor(o.status)">
+              {{ o.status }}
+            </span>
+            <div *ngIf="o.anomalyDescription" style="margin-top: 5px;">
+              <button class="btn-warn-small" (click)="showAnomalyDetails(o.id, o.anomalyDescription)">
+                ⚠️ View Anomaly
+              </button>
+            </div>
+          </td>
+
+          <td>{{ o.createdAt | date:'short' }}</td>
+
+          <td>
+            <!-- ADMIN ACTIONS -->
+            <ng-container *ngIf="userRole === 'ADMIN'">
+              <button *ngIf="o.status === 'CREATED'" (click)="updateStatus(o.id, 'VALIDATED')">Validate</button>
+              <button *ngIf="o.status === 'VALIDATED'" (click)="updateStatus(o.id, 'IN_PREPARATION')">Prepare</button>
+              <button *ngIf="o.status === 'IN_PREPARATION'" (click)="updateStatus(o.id, 'IN_DELIVERY')">Send to
+                Delivery</button>
+              <button *ngIf="o.status === 'ANOMALY_REPORTED'" (click)="updateStatus(o.id, 'ANOMALY_RESOLVED')">
+                Mark as Fixed
+              </button>
+
+            </ng-container>
+
+            <!-- CLIENT ACTIONS -->
+            <ng-container *ngIf="userRole === 'CLIENT'">
+              <span class="badge-info">
+                {{ o.status }}
+              </span>
+            </ng-container>
+
+            <ng-container *ngIf="userRole === 'AGENT'">
+
+              <div *ngIf="o.status === 'IN_DELIVERY'">
+                <button class="btn-approve" (click)="updateStatus(o.id, 'DELIVERED')">
+                  Approve Delivery
+                </button>
+
+                <button class="btn-warn" (click)="reportAnomaly(o.id)">
+                  Report Anomaly
+                </button>
+              </div>
+
+              <div *ngIf="o.status === 'ANOMALY_RESOLVED'">
+                <button class="btn-approve" (click)="updateStatus(o.id, 'DELIVERED')">
+                  Confirm Fixed & Delivered
+                </button>
+              </div>
+
+            </ng-container>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </ng-container>
+
+  <ng-template #noOrders>
+    <p>No orders available.</p>
+  </ng-template>
+
+  <div class="anomaly-modal" *ngIf="selectedAnomaly">
+    <div class="anomaly-box">
+      <h3>⚠️ Anomaly Details</h3>
+
+      <p>{{ selectedAnomaly }}</p>
+
+      <div *ngIf="selectedComments.length > 0" class="comments-section">
+        <h4>Conversation</h4>
+
+        <div *ngFor="let c of selectedComments" class="comment-box">
+          <strong>{{ c.username }} - {{ c.userRole }}</strong> <small>
+            ({{ c.createdAt | date:'short' }})
+          </small>
+
+          <p>{{ c.comment }}</p>
+        </div>
+      </div>
+
+      <textarea [(ngModel)]="replyText" placeholder="Write a reply or follow-up comment..." rows="4">
+</textarea>
+
+      <div class="modal-actions">
+        <button class="btn-approve" (click)="sendReply()">
+          Send Reply
+        </button> <button class="delete" (click)="closeAnomalyDetails()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="page-container">
+  <h2>Ship Requests</h2>
+
+  <!-- NEW REQUEST BUTTON -->
+  <!-- NEW REQUEST BUTTON -->
+  <div class="actions" *ngIf="userRole !== 'ADMIN' && userRole !== 'AGENT'">
+    <button class="btn-create" [routerLink]="['/ship-requests/create']">
+      + New Request
+    </button>
+  </div>
+
+  <!-- TABLE -->
+  <table *ngIf="requests.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ship</th>
+        <th>Port</th>
+        <th>Client</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Items Count</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let r of requests">
+        <td>
+          <a [routerLink]="['/ship-requests', r.id]" class="link-id">
+            #{{ r.id }}
+          </a>
+        </td>
+        <td>{{ r.shipName }}</td>
+        <td>{{ r.port }}</td>
+        <td>{{ r.clientName }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.createdAt | date:'short' }}</td>
+        <td>{{ r.items.length }}</td>
+
+<td>
+  <ng-container *ngIf="userRole === 'ADMIN' && r.status === 'CREATED'">
+    <button class="btn-approve" (click)="updateStatus(r.id!, 'APPROVED')">Approve</button>
+    <button class="btn-reject" (click)="updateStatus(r.id!, 'REJECTED')">Reject</button>
+    <button class="btn-ai" (click)="aiAnalyze(r.id!)">AI Analyze</button>
+  </ng-container>
+
+  <span *ngIf="userRole !== 'ADMIN' || r.status !== 'CREATED'" class="text-muted">—</span>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="requests.length === 0">No ship requests found.</p>
+
+  <!-- ====================================================== -->
+  <!--                 AI ANALYSIS PANEL (FINAL)              -->
+  <!-- ====================================================== -->
+
+  <div *ngIf="selectedRequestId" class="ai-panel">
+
+    <h3>AI Analysis for Request #{{ selectedRequestId }}</h3>
+
+    <!-- LOADING -->
+    <div *ngIf="aiLoading" class="loading">
+      ⏳ Running AI analysis...
+    </div>
+
+    <!-- ERROR -->
+    <div *ngIf="aiError" class="error">
+      {{ aiError }}
+    </div>
+
+    <!-- SUCCESS DISPLAY -->
+    <div *ngIf="aiResult && !aiLoading && !aiError">
+
+      <p><strong>Summary:</strong> {{ aiResult.summary }}</p>
+
+      <p><strong>Urgency Rating:</strong> {{ aiResult.urgency_rating }}</p>
+
+      <p><strong>Risks:</strong></p>
+      <ul>
+        <li *ngFor="let r of aiResult.risks">{{ r }}</li>
+      </ul>
+
+      <p><strong>Recommended Items:</strong></p>
+      <ul>
+        <li *ngFor="let i of aiResult.recommended_items">{{ i }}</li>
+      </ul>
+
+      <p><strong>Notes:</strong> {{ aiResult.notes }}</p>
+    </div>
+
+    <button (click)="closeAiPanel()">Close</button>
+
+  </div>
+
+</div>

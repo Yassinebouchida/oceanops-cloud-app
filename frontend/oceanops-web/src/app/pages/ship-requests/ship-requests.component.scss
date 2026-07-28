@@ -1,0 +1,169 @@
+.page-container {
+  padding: 30px;
+}
+
+h2 {
+  font-size: 26px;
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+/* ---------------------------------- */
+/* NEW REQUEST BUTTON CONTAINER       */
+/* ---------------------------------- */
+.actions {
+  margin-bottom: 20px;
+}
+
+/* Visible, clickable button */
+.btn-create {
+  display: inline-block;
+  background: #3b82f6;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-create:hover {
+  background: #2563eb;
+}
+
+/* ---------------------------------- */
+/* TABLE + BADGES + ACTION BUTTONS    */
+/* ---------------------------------- */
+.table-container {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  padding: 12px 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+td {
+  padding: 14px 8px;
+  font-size: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.badge {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.pending {
+  background: #fff4e5;
+  color: #d98a00;
+}
+
+.review {
+  background: #e8f1ff;
+  color: #2b6cd1;
+}
+
+.approved {
+  background: #e6f9e8;
+  color: #3ea45a;
+}
+
+.declined {
+  background: #ffe8e8;
+  color: #c0392b;
+}
+
+/* Action buttons */
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.btn-view {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-approve {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-decline {
+  background: #ef4444;
+  color: white;
+}
+/* ----------------------------- */
+/* AI ANALYSIS PANEL             */
+/* ----------------------------- */
+
+.ai-panel {
+  margin-top: 30px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #555;
+}
+
+.close-btn:hover {
+  color: #000;
+}
+
+.ai-loading {
+  font-size: 15px;
+  font-weight: 500;
+  color: #0a84ff;
+}
+
+.ai-error {
+  font-size: 15px;
+  font-weight: 600;
+  color: #d9534f;
+}
+
+.ai-result h4 {
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.urgency {
+  font-weight: bold;
+  font-size: 16px;
+  color: #d97706;
+}
+

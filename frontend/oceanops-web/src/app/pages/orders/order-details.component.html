@@ -1,0 +1,94 @@
+<div class="details-container" *ngIf="order">
+
+  <div class="header">
+    <button class="back-btn" routerLink="/orders">← Back</button>
+
+    <div>
+      <h1>Order #{{ order.id }}</h1>
+      <p class="subtitle">{{ order.shipName || order.description }}</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>General Information</h3>
+
+    <div class="info-grid">
+
+      <div>
+        <span class="label">🚢 Ship</span>
+        <span>{{ order.shipName || order.shipId }}</span>
+      </div>
+
+      <div>
+        <span class="label">📍 Port</span>
+        <span>{{ order.port }}</span>
+      </div>
+
+      <div>
+        <span class="label">👤 Client</span>
+        <span>{{ order.clientName }}</span>
+      </div>
+
+      <div>
+        <span class="label">🏢 Port Agent</span>
+        <span>{{ order.agentName }}</span>
+      </div>
+
+      <div>
+        <span class="label">Status</span>
+        <span class="badge status">
+          {{ order.status }}
+        </span>
+      </div>
+
+      <div>
+        <span class="label">🗓 Created At</span>
+        <span>{{ order.createdAt | date:'medium' }}</span>
+      </div>
+
+    </div>
+
+    <div class="notes">
+      <strong>Description</strong>
+      <p>{{ order.description }}</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Status History</h3>
+
+    <div *ngIf="history.length > 0; else noHistory" class="timeline">
+      <div class="timeline-item" *ngFor="let h of history">
+        <strong>{{ h.oldStatus }}</strong>
+        <span>→</span>
+        <strong>{{ h.newStatus }}</strong>
+      </div>
+    </div>
+
+    <ng-template #noHistory>
+      <p>No status history available.</p>
+    </ng-template>
+  </div>
+
+  <div class="card">
+    <h3>Comments</h3>
+
+    <div *ngIf="comments.length > 0; else noComments">
+      <div *ngFor="let c of comments" class="comment-box">
+        <strong>{{ c.username || ('User #' + c.userId) }}</strong>
+        <small *ngIf="c.createdAt"> — {{ c.createdAt | date:'short' }}</small>
+        <p>{{ c.comment }}</p>
+      </div>
+    </div>
+
+    <ng-template #noComments>
+      <p>No comments available.</p>
+    </ng-template>
+  </div>
+
+  <div class="card" *ngIf="order.anomalyDescription">
+    <h3>⚠️ Anomaly</h3>
+    <p>{{ order.anomalyDescription }}</p>
+  </div>
+
+</div>

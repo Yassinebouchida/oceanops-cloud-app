@@ -1,0 +1,82 @@
+<div class="page-container">
+  <h2>Inventory</h2>
+
+  <!-- Search + Filters -->
+  <div class="top-controls">
+    <input type="text" placeholder="Search items..." [(ngModel)]="searchText" class="search-box" />
+
+    <select class="filter-select" [(ngModel)]="filterCategory">
+      <option value="all">All Categories</option>
+      <option value="Food">Food</option>
+      <option value="Engine Parts">Engine Parts</option>
+      <option value="Safety">Safety</option>
+      <option value="Deck Supplies">Deck Supplies</option>
+      <option value="Beverages">Beverages</option>
+    </select>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-grid">
+    <div class="summary-card">
+      <p>Total Items</p>
+      <h3>{{ items.length }}</h3>
+    </div>
+
+    <div class="summary-card">
+      <p>Low Stock</p>
+      <h3>{{ lowStockCount }}</h3>
+    </div>
+
+    <div class="summary-card">
+      <p>Out of Stock</p>
+      <h3>{{ outOfStockCount }}</h3>
+    </div>
+
+    <div class="summary-card">
+      <p>Categories</p>
+      <h3>{{ categoriesCount }}</h3>
+    </div>
+  </div>
+
+  <!-- Inventory Table -->
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Item</th>
+          <th>Category</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of filteredItems">
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.category }}</td>
+          <td>{{ item.stock }}</td>
+          <td>${{ item.price }} / {{ item.unit }}</td>
+
+          <td>
+            <span class="status" [ngClass]="getStatus(item.stock)">
+              {{
+              getStatus(item.stock) === 'in' ? 'In Stock' :
+              getStatus(item.stock) === 'low' ? 'Low Stock' :
+              'Out of Stock'
+              }}
+            </span>
+          </td>
+
+          <td>
+            <button class="view-btn" (click)="viewItem(item)">View</button>
+            <button class="delete-btn" (click)="deleteItem(item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

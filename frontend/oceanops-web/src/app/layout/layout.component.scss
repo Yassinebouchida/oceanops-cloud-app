@@ -1,0 +1,59 @@
+/* === Layout Container === */
+.layout-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: #f5f7fa; // light gray background
+  overflow: hidden;
+}
+
+/* === SIDENAV === */
+app-sidenav {
+  width: 250px !important;
+  min-width: 250px !important;
+  max-width: 250px !important;
+
+  display: block !important;   /* This is the missing piece */
+  position: relative !important;
+  z-index: 2000 !important;
+  
+  background: #0d1b2a;
+  color: white;
+  padding-top: 1rem;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.15);
+}
+
+
+.main-content {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* === MAIN CONTENT AREA === */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  height: 100%;
+}
+
+/* === HEADER === */
+app-header {
+  background: #ffffff;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* === PAGE WRAPPER === */
+.page-wrapper {
+  padding: 2rem;
+  height: calc(100% - 64px);
+  overflow-y: auto;
+}

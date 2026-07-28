@@ -1,0 +1,76 @@
+<div class="dashboard-container">
+
+  <!-- PAGE TITLE -->
+  <h2 class="page-title">Dashboard</h2>
+
+  <!-- KPI CARDS -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <h3>Total Orders</h3>
+      <p class="value">{{ totalOrders }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>Pending Ship Requests</h3>
+      <p class="value">{{ pendingRequests }}</p>
+    </div>
+
+    <div class="stat-card" *ngIf="isAdmin">
+      <h3>Inventory Items</h3>
+      <p class="value">{{ inventoryItems }}</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>System Status</h3>
+      <p class="value online">Online</p>
+    </div>
+
+  </div>
+
+  <!-- CHARTS (NEXT STEP) -->
+  <div class="charts-grid">
+
+    <div class="chart-card">
+      <h3>Orders Overview</h3>
+      <div class="chart-content">
+        <ng-container *ngIf="orderStats.length > 0; else noData">
+          <div class="stat-row" *ngFor="let stat of orderStats">
+            <div class="stat-label">
+              <span>{{ stat.label }}</span>
+              <span class="stat-count">{{ stat.count }}</span>
+            </div>
+            <div class="bar-container">
+              <div class="bar" [style.width.%]="stat.pct" [style.background-color]="stat.color"></div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noData>
+          <div class="empty-state">No order data available</div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="chart-card" *ngIf="isAdmin">
+      <h3>Inventory Breakdown (By Quantity)</h3>
+      <div class="chart-content">
+        <ng-container *ngIf="inventoryStats.length > 0; else noInvData">
+          <div class="stat-row" *ngFor="let stat of inventoryStats">
+            <div class="stat-label">
+              <span>{{ stat.label }}</span>
+              <span class="stat-count">{{ stat.count }}</span>
+            </div>
+            <div class="bar-container">
+              <div class="bar" [style.width.%]="stat.pct" [style.background-color]="stat.color"></div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #noInvData>
+          <div class="empty-state">No inventory data available</div>
+        </ng-template>
+      </div>
+    </div>
+
+  </div>
+
+</div>

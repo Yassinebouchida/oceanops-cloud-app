@@ -1,0 +1,54 @@
+# macOS
+.DS_Store
+
+# Angular
+frontend/oceanops-web/node_modules/
+frontend/oceanops-web/dist/
+frontend/oceanops-web/.angular/
+frontend/oceanops-web/coverage/
+frontend/oceanops-web/.vscode/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Java / Spring Boot
+backend/target/
+target/
+**/target/
+*.class
+*.jar
+*.war
+*.log
+
+# Local Spring configuration
+backend/src/main/resources/application-local.properties
+backend/src/main/resources/application-local.yml
+backend/src/main/resources/application-secret.properties
+backend/src/main/resources/application-secret.yml
+
+# IDE
+.vscode/
+.idea/
+**/.idea/
+*.iml
+
+# Runtime and test data
+backend/uploads/
+uploads/
+backend_response.json
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Certificates and credentials
+*.pem
+*.key
+*.p12
+*.pfx
+credentials/
+secrets/
