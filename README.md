@@ -173,3 +173,14 @@ Configure the following environment variables before running the application:
 ## Acknowledgements
 
 This project was developed as part of a final-year engineering internship at **North West Africa Suppliers (NWAS)**, focusing on the digital transformation of shipchandling operations.
+
+
+## Copyright
+
+Copyright © 2026 Yassine Bouchida.
+
+This repository is published for portfolio, educational, and demonstration purposes only.
+
+Unless otherwise agreed in writing by the copyright holder, you may not use, reproduce, modify, redistribute, or commercialize substantial portions of this project's source code or assets.
+
+If you are interested in collaborating or licensing this project, please contact the author.
