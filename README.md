@@ -159,6 +159,25 @@ Configure the following environment variables before running the application:
 | DB_PASSWORD | Database password |
 | OPENAI_API_KEY | Optional OpenAI API key for AI-assisted analysis |
 
+
+## Architecture
+
+### System Architecture
+
+![OceanOps Cloud Architecture](docs/architecture/system-architecture.png)
+
+OceanOps Cloud follows a three-tier architecture composed of:
+
+- **Frontend:** Angular application providing role-based user interfaces.
+- **Backend:** Spring Boot REST API handling authentication, business logic, and workflow management.
+- **Database:** MySQL storing operational, user, and order data.
+
+The system exposes RESTful APIs consumed by the Angular client while Spring Security enforces authentication and authorization.
+
+The architecture separates presentation, business logic, and data persistence, improving maintainability, scalability, and future integration with external maritime systems.
+
+
+
 ## Future Improvements
 
 - Develop a mobile application to allow clients, shipchandlers, and port agents to manage operations on the go.
@@ -168,6 +187,7 @@ Configure the following environment variables before running the application:
 - Expand analytics dashboards with additional KPIs and reporting tools for operational monitoring.
 - Improve inventory forecasting and demand prediction using historical operational data and AI models.
 - Support multi-company and multi-port deployments to make the platform scalable for larger maritime operations.
+
 
 
 ## Acknowledgements
@@ -184,3 +204,4 @@ This repository is published for portfolio, educational, and demonstration purpo
 Unless otherwise agreed in writing by the copyright holder, you may not use, reproduce, modify, redistribute, or commercialize substantial portions of this project's source code or assets.
 
 If you are interested in collaborating or licensing this project, please contact the author.
+
